@@ -1,7 +1,3 @@
-/* ==============================
-   GET HTML ELEMENTS
-================================ */
-
 const passwordInput = document.getElementById("password");
 const confirmInput = document.getElementById("confirmPassword");
 
@@ -17,10 +13,6 @@ const matchMessage = document.getElementById("matchMessage");
 const resetBtn = document.getElementById("resetBtn");
 const checkBtn = document.getElementById("checkBtn");
 
-/* ==============================
-   PASSWORD REQUIREMENTS
-================================ */
-
 const requirements = {
     length: document.getElementById("lengthRequirement"),
     uppercase: document.getElementById("uppercaseRequirement"),
@@ -28,16 +20,9 @@ const requirements = {
     number: document.getElementById("numberRequirement"),
     special: document.getElementById("specialRequirement")
 };
-
-/* ==============================
-   CHECK PASSWORD STRENGTH
-================================ */
-
 function checkPasswordStrength() {
 
     const password = passwordInput.value;
-
-    // Empty password
     if (password === "") {
 
         strengthText.textContent = "Not entered";
@@ -50,7 +35,6 @@ function checkPasswordStrength() {
 
         strengthMessage.style.color = "#88849e";
 
-        // Reset requirements
         updateRequirement("length", false);
         updateRequirement("uppercase", false);
         updateRequirement("lowercase", false);
@@ -59,8 +43,6 @@ function checkPasswordStrength() {
 
         return;
     }
-
-    // Check each condition
     const hasLength = password.length >= 8;
 
     const hasUppercase = /[A-Z]/.test(password);
@@ -71,14 +53,11 @@ function checkPasswordStrength() {
 
     const hasSpecial = /[^A-Za-z0-9]/.test(password);
 
-    // Update checklist
     updateRequirement("length", hasLength);
     updateRequirement("uppercase", hasUppercase);
     updateRequirement("lowercase", hasLowercase);
     updateRequirement("number", hasNumber);
     updateRequirement("special", hasSpecial);
-
-    // Calculate score
     let score = 0;
 
     if (hasLength) score++;
@@ -87,7 +66,6 @@ function checkPasswordStrength() {
     if (hasNumber) score++;
     if (hasSpecial) score++;
 
-    // Weak password
     if (score <= 2) {
 
         strengthText.textContent = "Weak";
@@ -101,8 +79,6 @@ function checkPasswordStrength() {
 
         strengthMessage.style.color = "#e05b65";
     }
-
-    // Medium password
     else if (score <= 4) {
 
         strengthText.textContent = "Medium";
@@ -116,8 +92,6 @@ function checkPasswordStrength() {
 
         strengthMessage.style.color = "#e6a23c";
     }
-
-    // Strong password
     else {
 
         strengthText.textContent = "Strong";
@@ -131,15 +105,8 @@ function checkPasswordStrength() {
 
         strengthMessage.style.color = "#36a879";
     }
-
-    // Check password matching
     checkPasswordMatch();
 }
-
-/* ==============================
-   UPDATE REQUIREMENT CHECKLIST
-================================ */
-
 function updateRequirement(name, isValid) {
 
     const requirement = requirements[name];
@@ -160,10 +127,6 @@ function updateRequirement(name, isValid) {
     }
 }
 
-/* ==============================
-   SHOW / HIDE PASSWORD
-================================ */
-
 togglePassword.addEventListener("click", function () {
 
     if (passwordInput.type === "password") {
@@ -180,11 +143,6 @@ togglePassword.addEventListener("click", function () {
     }
 
 });
-
-/* ==============================
-   SHOW / HIDE CONFIRM PASSWORD
-================================ */
-
 toggleConfirm.addEventListener("click", function () {
 
     if (confirmInput.type === "password") {
@@ -201,11 +159,6 @@ toggleConfirm.addEventListener("click", function () {
     }
 
 });
-
-/* ==============================
-   CHECK PASSWORD MATCH
-================================ */
-
 function checkPasswordMatch() {
 
     const password = passwordInput.value;
@@ -232,11 +185,6 @@ function checkPasswordMatch() {
         matchMessage.style.color = "#e05b65";
     }
 }
-
-/* ==============================
-   PASSWORD INPUT EVENTS
-================================ */
-
 passwordInput.addEventListener("input", function () {
 
     checkPasswordStrength();
@@ -248,11 +196,6 @@ confirmInput.addEventListener("input", function () {
     checkPasswordMatch();
 
 });
-
-/* ==============================
-   CHECK PASSWORD BUTTON
-================================ */
-
 checkBtn.addEventListener("click", function () {
 
     if (passwordInput.value === "") {
@@ -275,50 +218,28 @@ checkBtn.addEventListener("click", function () {
     }
 
 });
-
-/* ==============================
-   RESET BUTTON
-================================ */
-
 resetBtn.addEventListener("click", function () {
-
-    // Clear inputs
     passwordInput.value = "";
 
     confirmInput.value = "";
-
-    // Reset password visibility
     passwordInput.type = "password";
-
-    confirmInput.type = "password";
-
-    togglePassword.textContent = "Show";
-
-    toggleConfirm.textContent = "Show";
-
-    // Reset strength text
-    strengthText.textContent = "Not entered";
-
-    strengthText.style.color = "#aaa6bd";
-
-    strengthFill.style.width = "0%";
-
-    strengthMessage.textContent =
+     confirmInput.type = "password";
+     togglePassword.textContent = "Show";
+     toggleConfirm.textContent = "Show";
+      strengthText.textContent = "Not entered";
+      strengthText.style.color = "#aaa6bd";
+     strengthFill.style.width = "0%";
+      strengthMessage.textContent =
         "Enter a password to check its strength.";
 
     strengthMessage.style.color = "#88849e";
 
-    // Reset matching message
     matchMessage.textContent = "";
-
-    // Reset checklist
     updateRequirement("length", false);
     updateRequirement("uppercase", false);
     updateRequirement("lowercase", false);
     updateRequirement("number", false);
     updateRequirement("special", false);
-
-    // Focus password field
     passwordInput.focus();
 
 });
